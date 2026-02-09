@@ -78,31 +78,31 @@ body::before {
 #flap {
   position: absolute;
   top: 0;
-  width: 100%;
-  height: 58%;
-
-  background: #ede4e4; /* same as envelope */
-  clip-path: polygon(0 0, 50% 100%, 100% 0);
-
-  transform-origin: top;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 210px solid transparent;
+  border-right: 210px solid transparent;
+  border-top: 162px solid #a28282;
+  transform-origin: top center;
   transition: transform 0.9s ease;
   z-index: 3;
 }
 
+/* Flap border using pseudo-element */
 #flap::before {
   content: "";
   position: absolute;
-  inset: 0;
-
-  clip-path: polygon(0 0, 50% 100%, 100% 0);
-  border: 2px solid #d6caca;
-  border-bottom: none;
-
-  pointer-events: none;
+  top: -162px;
+  left: -210px;
+  width: 0;
+  height: 0;
+  border-left: 210px solid transparent;
+  border-right: 210px solid transparent;
+  border-top: 162px solid #d7c7ac;
+  transform: scale(1.015);
+  z-index: -1;
 }
-
-
-
 /* ---------- Open Button ---------- */
 #open-btn {
   position: absolute;
@@ -128,43 +128,76 @@ body::before {
   background: #e9d8fd;
 }
 
-
-
 /* ---------- Letter ---------- */
 #letter {
-  position: absolute;
-  bottom: 40px; /* aligns with pocket */
+  position: fixed; /* Changed from absolute */
+  top: 50%; /* Center vertically on page */
   left: 50%;
-  transform: translateX(-50%) scaleY(0.25);
-
-  width: 88%;
-  height: 70%;
-
-  overflow: hidden;
+  transform: translate(-50%, -50%) scaleY(0.15); /* Center both ways */
+  width: 85%;
+  max-width: 500px;
+  height: 80vh; /* Make it 80% of viewport height */
+  padding: 50px 35px 50px 35px; /* More padding for curls */
+  overflow-y: auto;
   z-index: 4;
-
   animation: scrollUnwind 1.6s ease forwards;
-  transform-origin: center;
+  transform-origin: center center; /* Changed from center bottom */
+  
+  /* Parchment paper look */
+  background: linear-gradient(
+    to bottom,
+    #f4e8d0 0%,
+    #fdf8ed 10%,
+    #fffef9 50%,
+    #fdf8ed 90%,
+    #f4e8d0 100%
+  );
+  
+  /* Scroll edges with shadow */
+  box-shadow: 
+    0 4px 20px rgba(0,0,0,0.15),
+    inset 0 2px 10px rgba(139,90,43,0.1);
+  
+  border-radius: 8px;
 }
- 
+/* Top curl of scroll */
 #letter::before {
   content: "";
   position: absolute;
-  inset: 0;
-
+  top: -20px;
+  left: 0;
+  right: 0;
+  height: 20px;
   background: linear-gradient(
     to bottom,
-    #dfcfa8 0%,
-    #f0e2c0 14%,
-    #fffaf0 50%,
-    #f0e2c0 86%,
-    #dfcfa8 100%
+    #c9a96e 0%,
+    #e6d4ae 50%,
+    #f4e8d0 100%
   );
-
-  border-radius: 18px;
-  z-index: -1;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+  z-index: 1; /* Changed to positive - keep it visible */
+  pointer-events: none; /* So it doesn't block clicks */
 }
-
+/* Bottom curl of scroll */
+#letter::after {
+  content: "";
+  position: absolute;
+  bottom: -18px;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(
+    to top,
+    #c9a96e 0%,
+    #e6d4ae 50%,
+    #f4e8d0 100%
+  );
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  z-index: 1; /* Changed to match top */
+  pointer-events: none;
+}
 /*pocket*/ 
 
 #pocket {
@@ -176,7 +209,7 @@ body::before {
   width: 86%;
   height: 48%;
 
-  background: transparent;
+  background: #f5eded; /* lighter shade of envelope color */
   border: 2px solid #d6caca;
   border-top: none;
 
@@ -185,44 +218,38 @@ body::before {
 }
 
 /*paper being pulled out*/
-
 @keyframes scrollUnwind {
   0% {
-    transform: translateX(-50%) scaleY(0.25);
+    transform: translate(-50%, -50%) scaleY(0.15);
     opacity: 0;
   }
-  40% {
+  30% {
     opacity: 1;
   }
   100% {
-    transform: translateX(-50%) scaleY(1);
+    transform: translate(-50%, -50%) scaleY(1);
   }
 }
-
-
-
 /*Add a “rolling” animation class*/
-
-.scroll-down {
-  animation: scrollDown 0.9s ease forwards;
-}
 
 @keyframes scrollDown {
   to {
-    transform: scaleY(0);
+    transform: translate(-50%, -50%) scaleY(0); /* Keep it centered while closing */
     opacity: 0;
   }
 }
 
-
 #letter-text {
   font-size: 16px;
-  line-height: 1.8;
-  color: #4a4032;
-
+  line-height: 1.9;
+  color: #3d2f1f;
   opacity: 0;
   animation: fadeIn 0.6s ease forwards;
-  animation-delay: 1.1s;
+  animation-delay: 1.2s;
+  padding: 20px 10px;
+  text-align: left;
+  position: relative;
+  z-index: 1;
 }
 
 
@@ -251,32 +278,78 @@ button {
 #yes-btn:hover {
   background: #b7e2c6;
 }
-
 #no-btn {
   background: #f4caca;
   color: #7a2e2e;
   position: relative;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  min-width: 80px; /* Ensures minimum width */
+  min-height: 44px; /* Bigger click target */
+  padding: 12px 26px; /* More padding = bigger click area */
+  cursor: pointer;
 }
 
 #no-btn:hover {
   background: #f1bcbc;
 }
 
-/* ---------- Date Page ---------- */
-#date-page {    
-  background: #fffdf8;
-  padding: 30px;
-  border-radius: 6px 6px 14px 14px;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
-  animation: scrollUp 0.9s ease forwards;
+/* Make the clickable area even bigger with pseudo-element */
+#no-btn::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  /* This creates an invisible 10px border around the button that's still clickable */
 }
 
+/* ---------- Date Page ---------- */
+#date-page {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  width: 85%;
+  max-width: 500px;
+  background: linear-gradient(
+    to bottom,
+    #f4e8d0 0%,
+    #fdf8ed 10%,
+    #fffef9 50%,
+    #fdf8ed 90%,
+    #f4e8d0 100%
+  );
+  padding: 50px 40px;
+  border-radius: 8px;
+  box-shadow: 
+    0 4px 20px rgba(0,0,0,0.15),
+    inset 0 2px 10px rgba(139,90,43,0.1);
+  z-index: 4;
+  opacity: 0;
+  animation: scrollIn 1s ease forwards;
+}
 
-#date-page h2 {
+/* Scroll in animation */
+@keyframes scrollIn {
+  0% {
+    transform: translate(-50%, -50%) scale(0.3);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+#second-question {
   font-size: 18px;
+  line-height: 1.8;
+  color: #3d2f1f;
+  margin-bottom: 30px;
+  text-align: center;
   font-weight: 500;
-  margin-bottom: 22px;
-  color: #333;
 }
 
 .date-option {
@@ -284,10 +357,15 @@ button {
   margin-bottom: 14px;
   background: #e8edff;
   color: #3a4a8f;
+  padding: 14px 20px;
+  font-size: 15px;
+  white-space: normal; /* Allow text to wrap */
+  line-height: 1.4;
 }
 
 .date-option:hover {
   background: #d7defc;
+  transform: scale(1.02);
 }
 
 /* ---------- Animations ---------- */
@@ -327,4 +405,248 @@ button {
   #envelope {
     width: 100%;
   }
+}
+/* ---------- Custom Popup ---------- */
+#custom-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+#custom-popup.popup-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.popup-content {
+  background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+  padding: 40px 50px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  max-width: 400px;
+  animation: popupBounce 0.5s ease;
+  border: 3px solid #ffb3b3;
+}
+
+@keyframes popupBounce {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.popup-emoji {
+  font-size: 60px;
+  margin-bottom: 20px;
+  animation: spin 0.6s ease;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#popup-message {
+  font-size: 20px;
+  font-weight: 500;
+  color: #7a2e2e;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+#popup-close {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#popup-close:hover {
+  background: #ff5252;
+  transform: scale(1.05);
+}
+
+/* ---------- Emoji Rain ---------- */
+.emoji-fall {
+  position: fixed;
+  font-size: 40px;
+  pointer-events: none;
+  z-index: 9998;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  0% {
+    top: -50px;
+    opacity: 1;
+  }
+  100% {
+    top: 100vh;
+    opacity: 0.3;
+  }
+}
+
+/* ---------- Fireworks ---------- */
+.firework-particle {
+  position: fixed;
+  width: 12px; /* Bigger particles */
+  height: 12px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  box-shadow: 
+    0 0 10px currentColor,
+    0 0 20px currentColor,
+    0 0 30px currentColor; /* Glow effect */
+  animation: explode 1.5s ease-out forwards;
+}
+
+@keyframes explode {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* Fold and slide letter to the side */
+@keyframes foldAndSlide {
+  0% {
+    transform: translate(-50%, -50%) scaleY(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scaleY(0.1);
+  }
+  100% {
+    transform: translate(-150%, -50%) scaleY(0.1) scaleX(0.3);
+    opacity: 0.3;
+  }
+}
+
+/* ---------- Scroll Pages (Panic, Chill, Final) ---------- */
+.scroll-page {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.3);
+  width: 85%;
+  max-width: 500px;
+  background: linear-gradient(
+    to bottom,
+    #f4e8d0 0%,
+    #fdf8ed 10%,
+    #fffef9 50%,
+    #fdf8ed 90%,
+    #f4e8d0 100%
+  );
+  padding: 50px 40px;
+  border-radius: 8px;
+  box-shadow: 
+    0 4px 20px rgba(0,0,0,0.15),
+    inset 0 2px 10px rgba(139,90,43,0.1);
+  z-index: 4;
+  opacity: 0;
+}
+
+.scroll-page:not(.hidden) {
+  animation: scrollIn 1s ease forwards;
+}
+
+.scroll-text {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #3d2f1f;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 400;
+}
+
+.continue-btn {
+  width: 100%;
+  background: #ccebd6;
+  color: #245c3a;
+  padding: 14px 20px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.continue-btn:hover {
+  background: #b7e2c6;
+  transform: scale(1.02);
+}
+
+.final-option {
+  width: 100%;
+  margin-bottom: 14px;
+  background: #ffe8e8;
+  color: #7a2e2e;
+  padding: 14px 20px;
+  font-size: 15px;
+  white-space: normal;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.final-option:hover {
+  background: #ffd4d4;
+  transform: scale(1.02);
+}
+
+/* ---------- Confirmation Page ---------- */
+.confirmation-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #7a2e2e;
+  margin-bottom: 25px;
+  text-align: center;
+  letter-spacing: 1px;
+  animation: bounce 0.8s ease;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.confirmation-text {
+  font-size: 16px;
+  line-height: 1.9;
+  color: #3d2f1f;
+  text-align: left;
+  font-weight: 400;
 }

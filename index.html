@@ -41,7 +41,12 @@
     <!-- Letter -->
     <div id="letter" class="hidden">
       <p id="letter-text">
-        [Placeholder text — you’ll write your letter here.]
+        Hi Tashvi,<br><br>
+        ye test hai aage badh <br> <br>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua <br> <br>
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris <br><br>
+  loreum ipsum...<br><br>
+  <strong>Padhna band karna ye test hai bola na no click kar chal fir reload karke yes💝</strong>
       </p>
 
       <div class="choices">
@@ -50,14 +55,73 @@
       </div>
     </div>
 
-    <!-- Date Selection -->
-    <div id="date-page" class="hidden">
-      <h2>So — when do you want to go?</h2>
+    <!-- Second Question Page -->
+<div id="date-page" class="hidden">
+  <p id="second-question">
+    HEHEHE YOU SAID YES, soo when do you have capacity for a few hours, madame? 
+    <span style="font-size: 18px;">(idk if you'll come out on saturday😞)</span>
+  </p>
 
-      <button class="date-option">Friday after office</button>
-      <button class="date-option">Saturday</button>
+  <div class="choices">
+    <button class="date-option" id="panic-btn">Oh god I'm panicking what is this guy doing</button>
+    <button class="date-option" id="chill-btn">I am perfectly fine samaj kya rakha hai</button>
+  </div>
+</div>
+<!-- Third Page - Panic Response -->
+<div id="panic-page" class="hidden scroll-page">
+  <p class="scroll-text">
+    acha chill kar - kuch plan nahi kiya no extravagance or anything, its just our usual good food, daaru and lots of fun plan, this is just an another excuse for me to get to hangout with you :)
+  </p>
+  <div class="choices">
+    <button class="continue-btn" id="panic-continue">fineeee I was okay anywayyy</button>
+  </div>
+</div>
+
+<!-- Third Page - Chill Response -->
+<div id="chill-page" class="hidden scroll-page">
+  <p class="scroll-text">
+    lol as if, dont trynna be cool ik you wanted to click the other button, but chill kar - its just going to be us getting good food, drinks and hangout out cuz that in itself is fun :) this is just an another excuse for me to get to hangout with you :)
+  </p>
+  <div class="choices">
+    <button class="continue-btn" id="chill-continue">fineeee I was okay anywayyy</button>
+  </div>
+</div>
+
+<!-- Fourth Page - Final Question -->
+<div id="final-page" class="hidden scroll-page">
+  <p class="scroll-text">
+    Alright then - sounds like a plan hehe. Are we going friday night or saturday brunch?
+  </p>
+  <div class="choices">
+    <button class="final-option" id="friday-btn">Friday after office - hopefully</button>
+    <button class="final-option" id="saturday-btn">Saturday cuz i can lie to my parents</button>
+  </div>
+</div>
+
+<!-- Confirmation Page -->
+<div id="confirmation-page" class="hidden scroll-page">
+  <h1 class="confirmation-title">LETS GOOOOO !!!!!!!!!!!</h1>
+  <p class="confirmation-text">
+    Hi Tashvi,<br><br>
+    
+    This is a confirmation of your booking to go out with one of the cutest, smartest and charming people you have in your life rn, a smooth operator who needs no introduction, whose tales of humbleness and helpfulness spread far and wide - none other than the coolest JA who started your first job together with you :).<br><br>
+    
+    All you need to do is turn up, and trust me there is zero need to panic. dw NOTHING SERIOUS since that's what you fear the most 🤠 Just thought it'd be fun to hangout with you this weekend, would you imagine the coincidence though hahah<br><br>
+    
+    See you soon qt<br>
+    Regards,<br>
+    The coolest JA (you really need to keep a name for me)<br>
+    Steve Samuel
+  </p>
+</div>
+
+  <!-- Custom Popup -->
+  <div id="custom-popup" class="popup-hidden">
+    <div class="popup-content">
+      <div class="popup-emoji">As usual</div>
+      <p id="popup-message"></p>
+      <button id="popup-close">Duuhhhhhh 🙂‍↔️</button>
     </div>
-
   </div>
 
   <!-- Script -->
