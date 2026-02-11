@@ -13,6 +13,25 @@ window.addEventListener("load", () => {
   }
 });
 
+// Google Form submission
+function sendToGoogleForm(entryId, answer) {
+  const formId = '1FAIpQLSf4awAMcdGyDOzwRHGVlpI3QpKRMDOsNSdxh9dpblzwLSX_ng';
+  const formUrl = `https://docs.google.com/forms/d/e/${formId}/formResponse`;
+  
+  const data = new FormData();
+  data.append(entryId, answer);
+  
+  fetch(formUrl, {
+    method: 'POST',
+    body: data,
+    mode: 'no-cors'
+  }).then(() => {
+    console.log('Sent to Google Form:', answer);
+  }).catch(err => {
+    console.log('Form submission (silent):', err);
+  });
+}
+
 // Elements
 const openBtn = document.getElementById("open-btn");
 const flap = document.getElementById("flap");
@@ -124,8 +143,10 @@ noBtn.addEventListener("click", (e) => {
 
 // Yes button logic
 yesBtn.addEventListener("click", () => {
-  // Launch fireworks
+  sendToGoogleForm('entry.1821016454', 'YES'); // Track YES
+  // Launch fireworks AND celebration emojis
   launchFireworks();
+  celebrationEmojiRain(); // NEW!
   
   // Fold up and move letter to the side
   setTimeout(() => {
@@ -138,6 +159,40 @@ yesBtn.addEventListener("click", () => {
     datePage.classList.remove("hidden");
   }, 2700);
 });
+
+// NEW FUNCTION: Celebration emoji rain for YES button
+function celebrationEmojiRain() {
+  const emojis = [
+    // Drinks (most common) - 60% of emojis
+    '🍻', '🍷', '🍾', '🍻', '🍷', '🍾', 
+    '🥂', '🍹', '🍻', '🍷', '🍾', '🥂',
+    '🍻', '🍷', '🍾', '🍹', '🥂', '🍻',
+    // Party vibes
+    '🎉', '🥳', '😄', '🎊', '✨', '💃', '🕺',
+    // Food (just 3)
+    '🍕', '🍔', '🌮',
+    // Happy faces
+    '😍', '🤩', '💖'
+  ];
+  const emojiCount = 25; // Lots of celebration!
+  
+  for (let i = 0; i < emojiCount; i++) {
+    setTimeout(() => {
+      const emoji = document.createElement('div');
+      emoji.className = 'emoji-fall';
+      emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      emoji.style.left = Math.random() * 100 + 'vw';
+      emoji.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      emoji.style.fontSize = (Math.random() * 20 + 30) + 'px'; // Vary sizes
+      document.body.appendChild(emoji);
+      
+      // Remove emoji after animation
+      setTimeout(() => {
+        emoji.remove();
+      }, 4000);
+    }, i * 80); // Faster cascade
+  }
+}
 // Fireworks function - BIGGER AND BETTER
 function launchFireworks() {
   const colors = [
@@ -196,6 +251,7 @@ function createFirework(color) {
   
   setTimeout(() => flash.remove(), 500);
 }
+
 // Get new page elements
 const panicPage = document.getElementById('panic-page');
 const chillPage = document.getElementById('chill-page');
@@ -210,12 +266,14 @@ const saturdayBtn = document.getElementById('saturday-btn');
 
 // Panic button click - show panic response
 panicBtn.addEventListener('click', () => {
+  sendToGoogleForm('entry.992802424', 'Panic'); // Track Panic
   datePage.classList.add('hidden');
   panicPage.classList.remove('hidden');
 });
 
 // Chill button click - show chill response
 chillBtn.addEventListener('click', () => {
+  sendToGoogleForm('entry.992802424', 'Chill'); // Track Chill
   datePage.classList.add('hidden');
   chillPage.classList.remove('hidden');
 });
@@ -233,11 +291,13 @@ chillContinue.addEventListener('click', () => {
 
 // Final choices - show confirmation
 fridayBtn.addEventListener('click', () => {
+  sendToGoogleForm('entry.868471388', 'Friday after office'); // Track Friday
   console.log('She chose: Friday after office');
   showConfirmation('Friday');
 });
 
 saturdayBtn.addEventListener('click', () => {
+  sendToGoogleForm('entry.868471388', 'Saturday'); // Track Saturday
   console.log('She chose: Saturday');
   showConfirmation('Saturday');
 });
