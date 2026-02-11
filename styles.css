@@ -45,9 +45,9 @@ body::before {
 
 /* ---------- Music Toggle ---------- */
 .music-btn {
-  position: fixed;
-  top: 20px;
-  right: 20px;
+  position: fixed !important; /* Force it */
+  top: 20px !important;
+  right: 20px !important;
   background: rgba(255, 255, 255, 0.9);
   border: 2px solid #d6caca;
   border-radius: 50px;
@@ -57,14 +57,15 @@ body::before {
   z-index: 99999;
   transition: all 0.3s ease;
   font-family: 'Poppins', sans-serif;
+  transform: none !important; /* Prevent any centering transforms */
+  left: auto !important; /* Override any left positioning */
 }
 
 .music-btn:hover {
   background: white;
-  transform: scale(1.05);
+  transform: scale(1.05) !important; /* Only scale on hover */
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
-
 
 /* ---------- Container ---------- */
 #envelope-container {
