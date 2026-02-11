@@ -1,14 +1,62 @@
 //Music
 const bgMusic = document.getElementById("bg-music");
+const musicToggle = document.getElementById('music-toggle');
+let musicStarted = false;
+let isMusicPlaying = false;
 
 // Try autoplay on load
 window.addEventListener("load", () => {
-  bgMusic.volume = 0.4;
+  bgMusic.volume = 0.3;
 
   const playAttempt = bgMusic.play();
   if (playAttempt !== undefined) {
-    playAttempt.catch(() => {
-      console.log("Autoplay blocked — will start on interaction");
+    playAttempt.then(() => {
+      console.log("Music started automatically");
+      isMusicPlaying = true;
+      musicStarted = true;
+      musicToggle.textContent = '🔇 Music';
+    }).catch(() => {
+      console.log("Autoplay blocked — click to start");
+      musicToggle.textContent = '🔊 Music';
+    });
+  }
+});
+
+// IMPORTANT FOR MOBILE: Start music on "Open me" button click
+const openBtn = document.getElementById("open-btn");
+openBtn.addEventListener("click", () => {
+  // Start music if not started
+  if (!musicStarted && bgMusic.paused) {
+    bgMusic.play().then(() => {
+      isMusicPlaying = true;
+      musicStarted = true;
+      musicToggle.textContent = '🔇 Music';
+    }).catch(err => console.log("Play failed:", err));
+  }
+  
+  // open envelope flap
+  flap.style.transform = "rotateX(180deg)";
+  // reveal scroll
+  letter.classList.remove("hidden");
+  // hide open button after click
+  openBtn.style.display = "none";
+});
+
+// Music toggle button
+musicToggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  
+  if (isMusicPlaying) {
+    bgMusic.pause();
+    musicToggle.textContent = '🔊 Music';
+    isMusicPlaying = false;
+  } else {
+    bgMusic.play().then(() => {
+      musicToggle.textContent = '🔇 Music';
+      isMusicPlaying = true;
+      musicStarted = true;
+    }).catch(err => {
+      console.log("Play failed:", err);
     });
   }
 });
@@ -33,7 +81,6 @@ function sendToGoogleForm(entryId, answer) {
 }
 
 // Elements
-const openBtn = document.getElementById("open-btn");
 const flap = document.getElementById("flap");
 const envelope = document.getElementById("envelope");
 const letter = document.getElementById("letter");

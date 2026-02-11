@@ -43,6 +43,27 @@ body::before {
   animation: fadeIn 1.2s ease forwards;
 }
 
+/* ---------- Music Toggle ---------- */
+.music-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid #d6caca;
+  border-radius: 50px;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 99999;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.music-btn:hover {
+  background: white;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
 
 
 /* ---------- Container ---------- */
@@ -636,29 +657,48 @@ button {
 }
 
 /* ---------- Confirmation Page ---------- */
+#confirmation-page {
+  max-height: 85vh; /* Limit height on mobile */
+  overflow-y: auto; /* Allow scrolling */
+}
+
 .confirmation-title {
-  font-size: 28px;
+  font-size: 24px; /* Smaller on all screens */
   font-weight: 700;
   color: #7a2e2e;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   text-align: center;
   letter-spacing: 1px;
   animation: bounce 0.8s ease;
 }
 
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
 .confirmation-text {
-  font-size: 16px;
-  line-height: 1.9;
+  font-size: 15px; /* Slightly smaller */
+  line-height: 1.8;
   color: #3d2f1f;
   text-align: left;
   font-weight: 400;
+}
+
+/* Mobile specific fixes */
+@media (max-width: 420px) {
+  .scroll-page {
+    width: 95%; /* More width on mobile */
+    max-height: 85vh; /* Limit height */
+    padding: 40px 25px; /* Less padding */
+    overflow-y: auto; /* Allow scrolling */
+  }
+  
+  .confirmation-title {
+    font-size: 20px; /* Even smaller on mobile */
+  }
+  
+  .confirmation-text {
+    font-size: 14px; /* Smaller text */
+    line-height: 1.7;
+  }
+  
+  #confirmation-page {
+    max-height: 80vh;
+  }
 }
