@@ -169,7 +169,7 @@ noBtn.addEventListener("click", (e) => {
     // Third click - main popup
     emojiRain();
     setTimeout(() => {
-      showPopup("So you always wanna play hard to get huh?");
+      showPopup("Wow didn't think you would click no so many times 💔");
       const x = Math.random() * 150 - 75;
       const y = Math.random() * 150 - 75;
       noBtn.style.transform = `translate(${x}px, ${y}px)`;
@@ -363,3 +363,46 @@ function showConfirmation(day) {
   // Store the choice (for backend later)
   console.log('Final choice:', day);
 }
+
+// Restart button - go back to beginning and reset everything
+const restartBtn = document.getElementById('restart-btn');
+
+restartBtn.addEventListener('click', () => {
+  // Reset all visibility
+  document.getElementById('confirmation-page').classList.add('hidden');
+  letter.classList.add('hidden');
+  datePage.classList.add('hidden');
+  panicPage.classList.add('hidden');
+  chillPage.classList.add('hidden');
+  finalPage.classList.add('hidden');
+  
+  // Reset letter state and animations
+  letter.style.animation = '';
+  letter.style.transform = 'translate(-50%, -50%) scaleY(0.15)';
+  letter.style.opacity = '1';
+  letter.classList.remove('scroll-down');
+  
+  // Reset envelope
+  flap.style.transform = 'rotateX(0deg)';
+  openBtn.style.display = 'block';
+  
+  // Reset no button position and state
+  noBtn.style.transform = 'translate(0, 0)';
+  noBtn.textContent = 'No';
+  noBtn.style.fontSize = '14px';
+  noBtn.style.padding = '12px 26px';
+  noBtn.style.background = '#f4caca';
+  noBtn.style.fontWeight = '400';
+  noClickCount = 0; // Reset the click counter
+  
+  // Show envelope container
+  document.getElementById('envelope-container').style.display = 'flex';
+  
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  
+  // Optional: Launch celebration emojis
+  celebrationEmojiRain();
+  
+  console.log('Reset complete - ready to start again!');
+});

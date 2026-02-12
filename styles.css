@@ -703,3 +703,36 @@ button {
     max-height: 80vh;
   }
 }
+
+/* ---------- Restart Button ---------- */
+.restart-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #ffd6e8 0%, #ffe8f5 100%);
+  color: #7a2e2e;
+  padding: 14px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 30px;
+  border-radius: 28px;
+  border: 2px solid #ffb3d1;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: normal; /* Allow text wrapping on mobile */
+  line-height: 1.4;
+  text-align: center;
+}
+
+.restart-btn:hover {
+  background: linear-gradient(135deg, #ffc4dd 0%, #ffd6ea 100%);
+  transform: scale(1.03);
+  box-shadow: 0 4px 15px rgba(255, 179, 209, 0.4);
+}
+
+/* Mobile specific */
+@media (max-width: 420px) {
+  .restart-btn {
+    font-size: 14px;
+    padding: 12px 16px;
+    line-height: 1.3;
+  }
+}
